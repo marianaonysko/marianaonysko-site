@@ -108,12 +108,23 @@ h1 { margin:0; font-family:'Cormorant Garamond',Georgia,serif; font-weight:300;
 .contact .links { display:flex; flex-wrap:wrap; align-items:baseline; gap:clamp(14px,1.6vw,22px); font-size:clamp(14px,1.15vw,17px); }
 .contact .links a.email { font-weight:400; letter-spacing:-0.01em; }
 .contact .links a.small { font-size:0.9em; }
+
+@media (max-width: 768px) {
+  .video-box { display: none !important; }
+  .content { padding-left: clamp(20px, 4vw, 40px); min-height: auto; padding-top: clamp(20px, 4vw, 40px); }
+  .card { gap: clamp(16px, 3vw, 24px); }
+  h1 { font-size: clamp(24px, 5vw, 40px); }
+  .intro { font-size: clamp(14px, 3.5vw, 16px); max-width: 100%; }
+  .roles { font-size: clamp(12px, 3vw, 14px); }
+  .contact .links { flex-direction: column; gap: clamp(8px, 2vw, 12px); }
+  .langswitch { top: clamp(12px, 3vw, 20px); right: clamp(12px, 3vw, 20px); }
+}
 </style>
 </head>
 <body>
 <div class="wrap">
   <div class="video-box">
-    <video src="assets/hero.mp4" autoplay muted loop playsinline preload="auto" poster="assets/hero-poster.png"></video>
+    <video src="assets/hero.mp4" autoplay muted loop playsinline webkit-playsinline preload="auto" poster="assets/hero-poster.png"></video>
   </div>
   <div class="scrim"></div>
 
