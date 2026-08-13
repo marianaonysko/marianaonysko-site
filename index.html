@@ -176,20 +176,33 @@ h1 { margin:0; font-family:'Cormorant Garamond',Georgia,serif; font-weight:300;
 <script>
 (function () {
   var video = document.querySelector('.video-box video');
-  function kick() {
+
+  function playVideo() {
     if (!video) return;
     video.muted = true;
     video.loop = true;
-    if (video.ended || video.paused) {
-      if (video.ended) video.currentTime = 0;
-      var p = video.play();
-      if (p && p.catch) p.catch(function () {});
+    var promise = video.play();
+    if (promise !== undefined) {
+      promise.catch(function() {});
     }
   }
-  setInterval(kick, 1000);
-  document.addEventListener('visibilitychange', kick);
-  window.addEventListener('focus', kick);
-  kick();
+
+  function kick() {
+    if (!video) return;
+    if (video.paused || video.ended) {
+      if (video.ended) video.currentTime = 0;
+      playVideo();
+    }
+  }
+
+  if (video) {
+    playVideo();
+    setInterval(kick, 1000);
+    document.addEventListener('visibilitychange', kick);
+    window.addEventListener('focus', kick);
+    document.addEventListener('click', playVideo);
+    document.addEventListener('touchstart', playVideo);
+  }
 
   var btnRu = document.getElementById('btn-ru');
   var btnEn = document.getElementById('btn-en');
