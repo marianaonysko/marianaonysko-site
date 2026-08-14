@@ -190,12 +190,12 @@
     <div class="overlay"></div>
 
     <div class="lang-btn">
-      <button class="lang-btn-ru active">RU</button>
-      <button class="lang-btn-en">EN</button>
+      <button class="lang-btn-ru">RU</button>
+      <button class="lang-btn-en active">EN</button>
     </div>
 
     <div class="content">
-      <div class="text-block lang-ru">
+      <div class="text-block lang-ru hidden">
         <div>
           <h1>Марьяна Онысько</h1>
           <p class="bio">Помогаю выбраться из ежедневного хаоса, избавиться от работы по ночам и научиться выстраивать планирование с опорой на реальный ресурс, а не геройство. Т.к. стабильность важнее, чем качели.</p>
@@ -214,7 +214,7 @@
         </div>
       </div>
 
-      <div class="text-block lang-en hidden">
+      <div class="text-block lang-en">
         <div>
           <h1>Mariana Onysko</h1>
           <p class="bio">Guiding teams out of the daily chaos, eliminating late-night work, and designing execution plans built around real capacity.</p>
@@ -257,9 +257,9 @@
       localStorage.setItem('lang', 'en');
     });
 
-    const savedLang = localStorage.getItem('lang') || 'ru';
-    if (savedLang === 'en') {
-      enBtn.click();
+    const savedLang = localStorage.getItem('lang') || 'en';
+    if (savedLang === 'ru') {
+      ruBtn.click();
     }
   </script>
 </body>
