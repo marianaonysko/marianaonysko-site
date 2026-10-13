@@ -273,8 +273,8 @@
   .footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem 2rem; padding-block: 0 2rem; margin-top: calc(-1 * var(--sec) + 1.5rem); font-family: var(--display); font-size: .82rem; line-height: 1.5; color: var(--mute); }
   .footer__req { display: flex; flex-wrap: wrap; gap: .2rem 1.4rem; max-width: 46rem; }
   .footer__links { display: flex; flex-wrap: wrap; gap: .3rem 1.4rem; }
-  .footer__links a, .footer__cookies { color: var(--soft); text-decoration: none; font: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
-  .footer__links a:hover, .footer__cookies:hover { color: var(--wine); }
+  .footer__req a, .footer__links a, .footer__cookies { color: var(--soft); text-decoration: none; font: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+  .footer__req a:hover, .footer__links a:hover, .footer__cookies:hover { color: var(--wine); }
   .ph { background: #FFF1C9; color: var(--ink); padding: 0 .2em; }
   .cookie { position: fixed; left: 1rem; right: 1rem; bottom: calc(1rem + env(safe-area-inset-bottom, 0px)); z-index: 50; max-width: 34rem; margin-left: auto; background: var(--bg); color: var(--ink); box-shadow: 0 6px 30px rgba(30,20,22,.18); padding: 1.1rem 1.2rem; display: flex; flex-direction: column; gap: .8rem; font-family: var(--display); font-size: .9rem; line-height: 1.45; }
   .cookie p { margin: 0; }
@@ -420,6 +420,7 @@
       <span>ИП Марьяна Онысько</span>
       <span>Идентификационный номер 324084227</span>
       <span>Юридический адрес: Грузия, Имерети, г. Кутаиси, ул. Ахалцихе, 4</span>
+      <span><a href="mailto:ip@marianaonysko.com">ip@marianaonysko.com</a></span>
     </div>
     <nav class="footer__links">
       <a href="/privacy.html">Политика конфиденциальности</a>
@@ -430,9 +431,9 @@
 </div>
 
 <div class="cookie" id="cookieBar" role="dialog" aria-label="Согласие на cookies" hidden>
-  <p>Сайт использует cookies аналитики, чтобы понимать, какие материалы полезны. Подробнее в <a href="/privacy.html">политике конфиденциальности</a>.</p>
+  <p>Можно я буду собирать обезличенную статистику посещений через Google Analytics (cookies)? Это помогает понять, какие материалы полезны. Если откажетесь, никакие данные собираться не будут. Подробнее в <a href="/privacy.html">политике конфиденциальности</a>.</p>
   <div class="cookie__acts">
-    <button type="button" id="cookieNo">Только необходимые</button>
+    <button type="button" id="cookieNo">Отказаться</button>
     <button type="button" id="cookieYes" class="cookie__yes">Разрешить</button>
   </div>
 </div>
