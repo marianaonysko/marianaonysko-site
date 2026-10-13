@@ -281,6 +281,16 @@
   .cookie__acts { display: flex; flex-wrap: wrap; gap: .5rem; justify-content: flex-end; }
   .cookie button { font: inherit; font-weight: 500; padding: .55rem .9rem; border: 1px solid var(--rule); background: var(--bg); color: var(--ink); cursor: pointer; }
   .cookie button.cookie__yes { background: var(--wine); border-color: var(--wine); color: var(--bg); }
+  .cookie { max-height: calc(100vh - 2rem); overflow-y: auto; }
+  .cookie__prefs { display: flex; flex-direction: column; gap: .7rem; }
+  .cookie__cat { border-top: 1px solid var(--rule-soft); padding-top: .7rem; display: flex; flex-direction: column; gap: .3rem; }
+  .cookie__cat p, .cookie__cat ul { font-size: .82rem; color: var(--soft); }
+  .cookie__cat ul { margin: 0; padding-left: 1.1rem; }
+  .cookie__cat code { font-size: .95em; color: var(--ink); }
+  .cookie__row { display: flex; justify-content: space-between; align-items: center; gap: 1rem; cursor: pointer; }
+  .cookie__row b { font-weight: 500; }
+  .cookie__always { font-size: .8rem; color: var(--mute); }
+  .cookie__row input { width: 1.15rem; height: 1.15rem; accent-color: var(--wine); cursor: pointer; flex: none; }
   .cookie button:focus-visible, .footer__cookies:focus-visible { outline: 2px solid var(--wine); outline-offset: 2px; }
   /* about v2 */
   .about2 { display: flex; flex-direction: column; gap: clamp(1.6rem,3vw,2.4rem); scroll-margin-top: 1.5rem; }
@@ -430,14 +440,30 @@
 
 </div>
 
-<div class="cookie" id="cookieBar" role="dialog" aria-label="Согласие на cookies" hidden>
+<div class="cookie" id="cookieBar" role="dialog" aria-label="Настройки cookies" hidden>
   <p>Можно я буду собирать обезличенную статистику посещений через Google Analytics (cookies)? Это помогает понять, какие материалы полезны. Если откажетесь, никакие данные собираться не будут. Подробнее в <a href="/privacy.html">политике конфиденциальности</a>.</p>
+  <div class="cookie__prefs" id="cookiePrefs" hidden>
+    <div class="cookie__cat">
+      <div class="cookie__row"><b>Необходимые</b><span class="cookie__always">Всегда включены</span></div>
+      <p>Без них сайт не запомнит ваш выбор. Это не cookie, а запись в памяти вашего браузера, она никуда не передаётся.</p>
+      <ul><li><code>cookie-consent</code> — ваш выбор по cookies. Хранится, пока вы не очистите данные браузера.</li></ul>
+    </div>
+    <div class="cookie__cat">
+      <label class="cookie__row" for="cookieAnalytics"><b>Аналитика — Google Analytics</b><input type="checkbox" id="cookieAnalytics"></label>
+      <p>Обезличенная статистика: какие страницы смотрят и откуда приходят.</p>
+      <ul>
+        <li><code>_ga</code> — отличает одного посетителя от другого, 2 года.</li>
+        <li><code>_ga_H4E71EWDPE</code> — хранит состояние визита, 2 года.</li>
+      </ul>
+    </div>
+  </div>
   <div class="cookie__acts">
     <button type="button" id="cookieNo">Отказаться</button>
-    <button type="button" id="cookieYes" class="cookie__yes">Разрешить</button>
+    <button type="button" id="cookieCustomize" aria-expanded="false" aria-controls="cookiePrefs">Настроить</button>
+    <button type="button" id="cookieSave" hidden>Сохранить выбор</button>
+    <button type="button" id="cookieYes" class="cookie__yes">Разрешить все</button>
   </div>
 </div>
-
 
 <script>
 (function () {
@@ -461,16 +487,31 @@
     deleteGaCookies();
   }
   var bar = document.getElementById('cookieBar');
+  var prefs = document.getElementById('cookiePrefs');
+  var analytics = document.getElementById('cookieAnalytics');
+  var customize = document.getElementById('cookieCustomize');
+  var save = document.getElementById('cookieSave');
+  function showPrefs(open) {
+    prefs.hidden = !open;
+    save.hidden = !open;
+    customize.hidden = open;
+    customize.setAttribute('aria-expanded', String(open));
+    analytics.checked = get() === 'all';
+  }
   function choose(v) {
     set(v);
     bar.hidden = true;
+    showPrefs(false);
     if (v === 'all') window.loadAnalytics(); else revokeAnalytics();
   }
   document.getElementById('cookieYes').addEventListener('click', function () { choose('all'); });
   document.getElementById('cookieNo').addEventListener('click', function () { choose('necessary'); });
+  customize.addEventListener('click', function () { showPrefs(true); analytics.focus(); });
+  save.addEventListener('click', function () { choose(analytics.checked ? 'all' : 'necessary'); });
   document.getElementById('cookieSettings').addEventListener('click', function () {
     bar.hidden = false;
-    document.getElementById(get() === 'all' ? 'cookieNo' : 'cookieYes').focus();
+    showPrefs(true);
+    analytics.focus();
   });
   if (!get()) bar.hidden = false;
 })();
